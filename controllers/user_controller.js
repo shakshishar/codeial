@@ -3,18 +3,20 @@ const User=require('../models/user');
 
 module.exports.profile = async function(req, res) {
     try {
-        if (req.cookies.user_id) {
+        if (req.cookies && req.cookies.user_id) {
             console.log('User ID from cookie:', req.cookies.user_id);
-            const user = await User.findById(req.cookies.user_id);
-
-            if (user) {
-                return res.render('user_profile', {
-                    title: "User Profile",
-                    user: user
-                });
-            } else {
-                return res.redirect('/users/sign-in');
+            
+            const hexRegex = /^[0-9a-fA-F]{24}$/;
+            if (hexRegex.test(req.cookies.user_id)) {
+                const user = await User.findById(req.cookies.user_id);
+                if (user) {
+                    return res.render('user_profile', {
+                        title: "User Profile",
+                        user: user
+                    });
+                }
             }
+            return res.redirect('/users/sign-in');
         } else {
             return res.redirect('/users/sign-in');
         }
@@ -23,7 +25,6 @@ module.exports.profile = async function(req, res) {
         return res.redirect('/users/sign-in');
     }
 };
-
 //render the sign up page
 module.exports.signUp=function(req,res)
 {
