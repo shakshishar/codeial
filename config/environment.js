@@ -20,7 +20,7 @@ const development={
 
     google_client_id: "263736104825-1p3t8bc4dj1bbam9ji962lmup089h83m.apps.googleusercontent.com",
     google_client_secret: "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",
-    google_call_back_url: "http://localhost:3000/users/auth/google/callback",
+    google_call_back_url: "/users/auth/google/callback",
     jwt_secret:'codeial'
 }
 
